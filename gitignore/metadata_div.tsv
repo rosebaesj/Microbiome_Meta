@@ -1,0 +1,27 @@
+id	Study	species	disease_group	i_type	weeks	duration	c_number	i_number	group	c_type	disease	groupid	days_t
+Qi(2018)_MOX1	Qi(2018)	rat	GI	MOX	1	≤2	10	10	UC with 7 d of moxibustion(UC-7)	no_t	Colitis	MOX1	7
+Qi(2018)_MOX2	Qi(2018)	rat	GI	MOX	2	≤2	10	10	UCwith 14 d of moxibustion(UC-14)	no_t	Colitis	MOX2	14
+Qi(2018)_MOX3	Qi(2018)	rat	Healthy	MOX	1	≤2	10	10	HC with 7 d of moxibustion(HC-7)	no_t	Healthy	MOX3	7
+Qi(2018)_MOX4	Qi(2018)	rat	Healthy	MOX	2	≤2	10	10	HC with 14 d of moxibustion(HC-14)	no_t	Healthy	MOX4	14
+Si(2018)_EA1	Si(2018)	mouse	Obesity	EA	1	≤2	6	6	A7	no_t	Obese	EA1	7
+Si(2018)_EA2	Si(2018)	mouse	Obesity	EA	2	≤2	6	6	A14	no_t	Obese	EA2	14
+Si(2018)_EA3	Si(2018)	mouse	Obesity	EA	3	>2	6	6	A21	no_t	Obese	EA3	21
+Si(2018)_EA4	Si(2018)	mouse	Obesity	EA	4	>2	6	6	A28	no_t	Obese	EA4	28
+He(2019)_MOX1	He(2019)	rat	GI	MOX	1	≤2	6	6	Stomach meridian (ST) group	no_t	Colitis	MOX1	5
+He(2019)_MOX2	He(2019)	rat	GI	MOX	1	≤2	6	6	Gallbladder meridian (GB) group	no_t	Colitis	MOX2	5
+Wang(2019)_EA	Wang(2019)	rat	Obesity	EA	4	>2	7	7	Acupuncture group	no_t	Obese	EA	24
+Wei(2019)_EA	Wei(2019)	mouse	GI	EA	1	≤2	12	13	UC + EA treatment	sham	Colitis	EA	5
+Wei(2019)_MOX	Wei(2019)	mouse	GI	MOX	1	≤2	12	12	UC + MOX treatment	sham	Colitis	MOX	5
+Chen(2020)_MOX	Chen(2020)	rat	Other	MOX	2	≤2	9	9	Moxibustion treatment group (MS)	no_t	Other	MOX	14
+Jin(2020)_EA	Jin(2020)	rat	GI	EA	2	≤2	12	12	sEA group	no_t	Other_GI	EA	14
+Li(2020)_MOX	Li(2020)	rat	GI	MOX	3	>2	10	10	Moxibustion (MOX)	no_t/positive	Colitis	MOX	15
+Shen(2020)_EA	Shen(2020)	rabbit	Other	EA	1	≤2	6	6	EA group	no_t	Other	EA	6
+Song(2020)_EA	Song(2020)	rat	GI	EA	2	≤2	10	10	EA group	no_t	IBS	EA	10
+Wang(2020)_EA1	Wang(2020)	mouse	GI	EA	5~	>2	12	12	DSS + low-frequency EA (LEA)	no_t	Colitis	EA1	56
+Wang(2020)_EA2	Wang(2020)	mouse	GI	EA	5~	>2	12	12	DSS + high-frequency EA (HEA)	no_t	Colitis	EA2	56
+Xie(2020)_EA1	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-ST36 (DIO-ST36)	no_t	Obese	EA1	14
+Xie(2020)_EA2	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-GB34 (DIO-GB34)	no_t	Obese	EA2	14
+Xie(2020)_EA3	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-ST36+GB34 (DIO-ST36+GB34)	no_t	Obese	EA3	14
+Han(2021)_MA	Han(2021)	mouse	Other	MA	1	≤2	8	8	PD+MA	no_t	Other	MA	5
+Han(2021)_EA	Han(2021)	mouse	Other	EA	1	≤2	8	8	PD+EA	no_t	Other	EA	5
+Wang(2021)_EA	Wang(2021)	human	Other	EA	5~	>2	29	29	Hypertensive	before_t	Other	EA	42

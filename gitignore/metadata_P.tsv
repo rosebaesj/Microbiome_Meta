@@ -1,0 +1,15 @@
+id	Study	species	disease_group	i_type	weeks	duration	c_number	i_number	group	c_type	disease	groupid	days_t
+Wang(2018)_MOX	Wang(2018)	rat	GI	MOX	1	≤2	11	11	moxibustion	no_t	IBS	MOX	7
+Wang(2018)_EA	Wang(2018)	rat	GI	EA	1	≤2	11	10	electroacupuncture (EA)	no_t	IBS	EA	7
+Wang(2019)_EA	Wang(2019)	rat	Obesity	EA	4	>2	7	7	Acupuncture group	no_t	Obese	EA	24
+Chen(2020)_MOX	Chen(2020)	rat	Other	MOX	2	≤2	9	9	Moxibustion treatment group (MS)	no_t	Other	MOX	14
+Jang(2020)_MA	Jang(2020)	mouse	Other	MA	2	≤2	10	9	MPTP+Acu	sham/no_t	Other	MA	12
+Jin(2020)_EA	Jin(2020)	rat	GI	EA	2	≤2	12	12	sEA group	no_t	Other_GI	EA	14
+Liu(2020)_EA	Liu(2020)	mouse	GI	EA	2	≤2	6	6	DSS + EA (C)	no_t	Colitis	EA	9
+Wang(2020)_EA1	Wang(2020)	mouse	GI	EA	5~	>2	12	12	DSS + low-frequency EA (LEA)	no_t	Colitis	EA1	56
+Wang(2020)_EA2	Wang(2020)	mouse	GI	EA	5~	>2	12	12	DSS + high-frequency EA (HEA)	no_t	Colitis	EA2	56
+Xie(2020)_EA1	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-ST36 (DIO-ST36)	no_t	Obese	EA1	14
+Xie(2020)_EA2	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-GB34 (DIO-GB34)	no_t	Obese	EA2	14
+Xie(2020)_EA3	Xie(2020)	rat	Obesity	EA	2	≤2	6	6	EA-ST36+GB34 (DIO-ST36+GB34)	no_t	Obese	EA3	14
+Xu(2020)_MA	Xu(2020)	mouse	Other	MA	1	≤2	10	10	Acupoints combination group	no_t	Other	MA	7
+Wang(2021)_EA	Wang(2021)	human	Other	EA	5~	>2	29	29	Hypertensive	before_t	Other	EA	42
