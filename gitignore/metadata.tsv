@@ -1,0 +1,51 @@
+Study	id	groupid	c_number	i_number	group	i_type	c_type	disease	days_t	species
+Wang(2012)	Wang(2012)_MOX	MOX	10	10	Herb-partition moxibustion(HPM-treated)	MOX	no_t	Colitis	8	rat
+Xu(2013)	Xu(2013)_MA1	MA1	15	15	Treatment group 1	MA	no_t	Obese	20	human
+Xu(2013)	Xu(2013)_MA2	MA2	15	15	Treatment group 2	MA	no_t	Obese	20	human
+Qi(2018)	Qi(2018)_MOX1	MOX1	10	10	UC with 7 d of moxibustion(UC-7)	MOX	no_t	Colitis	7	rat
+Qi(2018)	Qi(2018)_MOX2	MOX2	10	10	UCwith 14 d of moxibustion(UC-14)	MOX	no_t	Colitis	14	rat
+Qi(2018)	Qi(2018)_MOX3	MOX3	10	10	HC with 7 d of moxibustion(HC-7)	MOX	no_t	Healthy	7	rat
+Qi(2018)	Qi(2018)_MOX4	MOX4	10	10	HC with 14 d of moxibustion(HC-14)	MOX	no_t	Healthy	14	rat
+Si(2018)	Si(2018)_EA1	EA1	6	6	A7	EA	no_t	Obese	7	mouse
+Si(2018)	Si(2018)_EA2	EA2	6	6	A14	EA	no_t	Obese	14	mouse
+Si(2018)	Si(2018)_EA3	EA3	6	6	A21	EA	no_t	Obese	21	mouse
+Si(2018)	Si(2018)_EA4	EA4	6	6	A28	EA	no_t	Obese	28	mouse
+Wang(2018)	Wang(2018)_MOX	MOX	11	11	moxibustion	MOX	no_t	IBS	7	rat
+Wang(2018)	Wang(2018)_EA	EA	11	10	electroacupuncture (EA)	EA	no_t	IBS	7	rat
+Bao(2019)	Bao(2019)_MOX	MOX	10	10	Mild moxibustion group	MOX	no_t	IBS	7	rat
+Bao(2019)	Bao(2019)_sMOX	sMOX	10	10	Sham mild moxibustion group	sham	no_t	IBS	7	rat
+He(2019)	He(2019)_MOX1	MOX1	6	6	Stomach meridian (ST) group	MOX	no_t	Colitis	5	rat
+He(2019)	He(2019)_MOX2	MOX2	6	6	Gallbladder meridian (GB) group	MOX	no_t	Colitis	5	rat
+Huang(2019)	Huang(2019)_EA	EA	48	56	Observation group	EA	positive	Other_GI	0.3	human
+Wang(2019)	Wang(2019)_EA	EA	7	7	Acupuncture group	EA	no_t	Obese	24	rat
+Wei(2019)	Wei(2019)_EA	EA	12	13	UC + EA treatment	EA	sham	Colitis	5	mouse
+Wei(2019)	Wei(2019)_MOX	MOX	12	12	UC + MOX treatment	MOX	sham	Colitis	5	mouse
+Wei(2019)	Wei(2019)_sEA	sEA	12	12	sham handled	sham	sham	Colitis	5	mouse
+Chen(2020)	Chen(2020)_MOX	MOX	9	9	Moxibustion treatment group (MS)	MOX	no_t	Other	14	rat
+Dou(2020)	Dou(2020)_EA1	EA1	10	10	Electroacupuncture group (A21)	EA	no_t	Obese	21	mouse
+Dou(2020)	Dou(2020)_EA2	EA2	10	10	Electroacupuncture group (A28)	EA	no_t	Obese	28	mouse
+Jang(2020)	Jang(2020)_MA	MA	10	9	MPTP+Acu	MA	sham/no_t	Other	12	mouse
+Jang(2020)	Jang(2020)_sMA	sMA	10	5	MPTP+Nonacu	sham	sham/no_t	Other	12	mouse
+Jin(2020)	Jin(2020)_EA	EA	12	12	sEA group	EA	no_t	Other_GI	14	rat
+Li(2020)	Li(2020)_MOX	MOX	10	10	Moxibustion (MOX)	MOX	no_t/positive	Colitis	15	rat
+Liu(2020)	Liu(2020)_EA	EA	6	6	DSS + EA (C)	EA	no_t	Colitis	9	mouse
+Shen(2020)	Shen(2020)_EA	EA	6	6	EA group	EA	no_t	Other	6	rabbit
+Song(2020)	Song(2020)_EA	EA	10	10	EA group	EA	no_t	IBS	10	rat
+Wang(2020)	Wang(2020)_EA1	EA1	12	12	DSS + low-frequency EA (LEA)	EA	no_t	Colitis	56	mouse
+Wang(2020)	Wang(2020)_EA2	EA2	12	12	DSS + high-frequency EA (HEA)	EA	no_t	Colitis	56	mouse
+Wang(2020)	Wang(2020)_sEA	sEA	12	12	DSS + sham EA (SEA)	sham	sham	Colitis	56	mouse
+Xie(2020)	Xie(2020)_EA1	EA1	6	6	EA-ST36 (DIO-ST36)	EA	no_t	Obese	0.2	rat
+Xie(2020)	Xie(2020)_EA2	EA2	6	6	EA-GB34 (DIO-GB34)	EA	no_t	Obese	0.2	rat
+Xie(2020)	Xie(2020)_EA3	EA3	6	6	EA-ST36+GB34 (DIO-ST36+GB34)	EA	no_t	Obese	0.2	rat
+Xu(2020)	Xu(2020)_MA	MA	10	10	Acupoints combination group	MA	no_t	Other	7	mouse
+Han(2021)	Han(2021)_MA	MA	8	8	PD+MA	MA	no_t	Other	5	mouse
+Han(2021)	Han(2021)_EA	EA	8	8	PD+EA	EA	no_t	Other	5	mouse
+Wang(2021)	Wang(2021)_EA	EA	29	29	Hypertensive	EA	before_t	Other	0.6	human
+										
+										
+										
+										
+										
+										
+										
+								10		
