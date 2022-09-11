@@ -8,6 +8,8 @@ library(forestplot)
 library(ggpubr)
 library(gridExtra)
 library(mixmeta)
+library(dplyr)
+library(writexl)
 
 
 getwd()
@@ -891,3 +893,103 @@ model <- mixmeta(TE ~ disease_group, S=seTE, data = mv_Chao1)
 coef.mixmeta(model)
 plot(fitted(model))
 
+
+
+
+
+
+######## funnel plot #####
+metait <-  metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                                sm = "ROM", id,  data = a_ACE)
+
+metait$TE.random
+
+tableit <-  data.frame(metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                       sm = "ROM", id,  data = a_ACE))
+
+# logROM, SE of logROM
+
+ggplot(data = tableit) + 
+ geom_vline(xintercept = 0, linetype=1, color = "grey70")+
+  geom_vline(xintercept = metait$TE.random, linetype="dashed", color = "grey70")+
+  geom_abline(slope = 1/1.96, intercept = -(metait$TE.random)/1.96, linetype="dashed", color = "grey70")+
+  geom_abline(slope = -1/1.96, intercept = (metait$TE.random)/1.96, linetype="dashed", color = "grey70")+
+  geom_point( aes(x = TE, y = seTE))+
+  scale_y_reverse("SE of log(ROM)", expand=c(0.1,0))	+
+  scale_x_continuous("log(ROM)", expand=c(0.1,0))+
+  theme_classic()
+ggsave("output_funnel/ACE_SE.png", device = "png", width = 3, height = 3, units = "in")
+summary(lm(data=tableit, formula = seTE~TE))
+  #MD logROM,inverse n
+
+ggplot(data = tableit)+
+  geom_vline(xintercept = 0, linetype=1, color = "grey70")+
+  geom_point(aes(x = TE, y = 1/sqrt(n.e)))+
+  scale_y_reverse("inverse sqare root of n", expand=c(0.1,0))	+
+  theme_classic()
+ggsave("output_funnel/ACE_n.png", device = "png", width = 3, height = 3, units = "in")
+
+
+metait <-  metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                    sm = "ROM", id,  data = G_Lactobacillus)
+metait$TE.random
+tableit <-  data.frame(metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                                sm = "ROM", id,  data = G_Lactobacillus))
+
+# logROM, SE of logROM
+
+ggplot(data = tableit) + 
+  geom_vline(xintercept = 0, linetype=1, color = "grey70")+
+  geom_vline(xintercept = metait$TE.random, linetype="dashed", color = "grey70")+
+  geom_abline(slope = 1/1.96, intercept = -(metait$TE.random)/1.96, linetype="dashed", color = "grey70")+
+  geom_abline(slope = -1/1.96, intercept = (metait$TE.random)/1.96, linetype="dashed", color = "grey70")+
+  geom_point( aes(x = TE, y = seTE))+
+  scale_color_manual(values=c('#80c269', '#eb6877','#f19149',  '#448aca', '#ae5da1')) +  
+  scale_y_reverse("SE of log(ROM)", expand=c(0.05,0))	+
+  scale_x_continuous("log(ROM)", expand=c(0.05,0))+
+  theme_classic()
+summary(lm(data=tableit, formula = seTE~TE))
+ggsave("output_funnel/Lacto_SE.png", device = "png", width = 3, height = 3, units = "in")
+
+ggplot(data = tableit)+
+  geom_vline(xintercept = 0, linetype=1, color = "grey70")+
+  geom_point(aes(x = TE, y = 1/sqrt(n.e)))+
+  scale_y_reverse("inverse sqare root of n", expand=c(0.5,0))	+
+  theme_classic()
+summary(lm(data=tableit, formula = (1/sqrt(n.e))~TE))
+ggsave("output_funnel/Lacto_n.png", device = "png", width = 3, height = 3, units = "in")
+
+
+##### Leave one out
+
+Wang_2012 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+         sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Wang(2012)"))
+Xu_2013 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                     sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Xu(2013)"))
+Bao_2019 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                    sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Bao(2019)"))
+Huang_2019 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                       sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Huang(2019)"))
+Li_2020 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                    sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Li(2020)"))
+Xie_2020 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                    sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Xie(2020)"))
+Xu_2020 <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                    sm = "ROM", id,  data = G_Lactobacillus %>% filter(Study!="Xu(2020)"))
+
+
+string <- c("Q","df.Q", "pval.Q","H", "I2", "tau2", "k",
+            "TE.random", "lower.random", "upper.random", "pval.random")
+loo <- data.frame()
+loo <- data.frame(rbind(Wang_2012[string], Xu_2013[string], Bao_2019[string], Huang_2019[string],
+             Li_2020[string],  Xie_2020[string], Xu_2020[string]))
+
+loo <- loo %>% rowwise() %>%
+  mutate(ROM = exp(TE.random),
+         lower = exp(lower.random),
+         upper = exp(upper.random), 
+         I2 = I2)
+
+
+
+write_csv (loo, "output_funnel/leave_one_out.csv")
