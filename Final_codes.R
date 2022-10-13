@@ -95,7 +95,38 @@ logexp_draw_sub(table_sub_RE_Chao1, n=nrow(table_sub_RE_Chao1),name = "Chao1",
                                 "white", "white", "white", "white"),
                 filepath = "output_forestplot/logexp_RE_sub_Chao1.png")
 
+#### ++ plot Disease only  #######
+table_sub_Disease_ACE <- subgroup_RE_Disease_ROM(a_ACE, metadata)
+table_sub_Disease_Chao1 <- subgroup_RE_Disease_ROM(a_Chao1, metadata)
 
+logexp_draw_sub(table_sub_Disease_ACE,n=nrow(table_sub_Disease_ACE),name="ACE", 
+                colorvector = c("grey90",
+                                "white", "white", "white","white"
+                ),
+                filepath = "output_forestplot/logexp_Disease_sub_ACE.png")
+
+logexp_draw_sub(table_sub_Disease_Chao1, n=nrow(table_sub_Disease_Chao1),name = "Chao1",
+                colorvector = c("grey90",
+                                "white", "white", "white", "white"),
+                filepath = "output_forestplot/logexp_Disease_sub_Chao1.png")
+
+
+
+table_sub_FE_Disease_ACE <- subgroup_FE_Disease_ROM(a_ACE, metadata)
+
+logexp_draw_sub(table_sub_FE_Disease_ACE,n=nrow(table_sub_FE_Disease_ACE),name="ACE", 
+                colorvector = c("grey90",
+                                "white", "white", "white","white"
+                ),
+                filepath = "output_forestplot/logexp_FE_Disease_sub_ACEs.png")
+
+table_sub_FE_Disease_Chao1 <- subgroup_FE_Disease_ROM(a_Chao1, metadata)
+
+logexp_draw_sub(table_sub_FE_Disease_Chao1,n=nrow(table_sub_FE_Disease_Chao1),name="Chao1", 
+                colorvector = c("grey90",
+                                "white", "white", "white","white"
+                ),
+                filepath = "output_forestplot/logexp_FE_Disease_sub_Chao1.png")
 
 
 
@@ -160,6 +191,81 @@ grid.arrange(p_list_P, pl_Bacteroidetes, pl_Firmicutes, pl_Proteobacteria, pl_Ve
              widths= c(25,14,14,14,14,14)#, heights = c(5,5,5,5,5,5,5)
 )
 dev.off()
+library(lmerTest)
+
+###### +++ F/B ratio graph #######
+FBratio <- read.table("input_rela_abd/FBratio.tsv", header = TRUE, sep = "\t")
+FBratio <- left_join(FBratio, metadata, by="id")
+
+FBratio$disease_GIsep <- factor(FBratio$disease_GIsep, levels = c("GI", "GI-inflam", "Obesity", "Other"))
+FBratio <- FBratio %>% arrange(disease_GIsep)
+FBratio$id <- factor(FBratio$id, levels = rev(FBratio$id))
+
+FBratio$disease_group <- factor(FBratio$disease_group, levels = c("GI", "Obesity", "Other"))
+FBratio <- FBratio %>% arrange(disease_group)
+FBratio$id <- factor(FBratio$id, levels = rev(FBratio$id))
+
+
+
+colorvector = c("grey90","grey90","grey90","grey90",
+                "white", "white", "white", "white", 
+                "grey90","grey90","grey90","grey90","grey90","grey90","grey90","grey90")
+
+FBratio_table <- ggplot(data=FBratio, aes(y=id))+
+  ggtitle("    Study               Dis.     Treat.   Wks")+
+  geom_rect( aes(ymin = as.numeric(id)-0.5, ymax= as.numeric(id)+0.5,NULL, NULL),
+             xmin = -Inf, xmax = Inf,colour = NA,
+             fill = rev(colorvector))+
+  geom_text(aes(x = 0, label = Study), hjust = 0) +
+  geom_text(aes(x = 1.1, label = disease_group)) +
+  geom_text(aes(x = 1.6, label = i_type)) +
+  geom_text(aes(x = 2, label = duration)) +
+  theme_MicrobeR() +
+  theme(panel.border = element_blank(), axis.line = element_line()) +
+  theme(axis.text.x=element_text(color = "white"),
+        axis.title.x = element_text(color = "white"),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust=0, face = "bold"),
+        plot.margin=unit(c(0.3,0,0.5,0), "cm"))
+
+
+FBratio_forest <- ggplot(data = FBratio, aes(x=i_FB/c_FB, y=id))  +
+  ggtitle("")+
+
+  geom_rect( aes(ymin = as.numeric(id)-0.5, ymax= as.numeric(id)+0.5,NULL, NULL),
+             xmin = -Inf, xmax = Inf,colour = NA,
+             fill = rev(colorvector))+
+  geom_vline(xintercept = 1, linetype="dashed", color="grey50") +
+  # geom_hline(yintercept = 3, linetype="dashed", color="grey50")+
+  # geom_errorbarh(aes(xmin=lower, xmax=upper), height=0 ) +
+  # scale_color_manual(values=c(  "pink3","skyblue3","gray44"))  +
+  geom_point()+#aes(size = stat))#+
+  # scale_shape_manual(values=c(18, 5, 16, 1))+
+  # scale_size_manual(values=c(2.5, 2, 1, 0.5))+
+  # scale_y_discrete(limits=rev)+
+  # scale_x_continuous(expand = c(0.05, 0.05))+
+  # labs(x="log(ROM)")+
+  theme_MicrobeR() +
+  theme(panel.border = element_blank(), axis.line = element_line()) +
+  theme(axis.text.x=element_text(hjust=1),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust=0.5, face = "bold"),
+        plot.margin=unit(c(0.3,0,0.5,0), "cm"))
+
+png("output_forestplot/FBratio.png", width = 4, height = (nrow(FBratio)+3)/5, units = "in", res = 300)
+grid.arrange(FBratio_table, FBratio_forest,
+             ncol=2, 
+             widths= c(25,14)#, heights = c(5,5,5,5,5,5,5)
+)
+dev.off()
+
 
 
 
@@ -221,7 +327,7 @@ dev.off()
 ####### + subgroup analysis ######
 ####### ++ make ROM tables #####
 table_sub_G_Lactobacillus <- subgroup_ROM(G_Lactobacillus, metadata)
-table_sub_RE_G_Lactobacillus <- subgroup_RE_ROM(G_Lactobacillus, metadata)
+
 
 #### ++ plot in logROM form #######
 logexp_draw_sub(table_sub_G_Lactobacillus, n=nrow(table_sub_G_Lactobacillus),name = "Lactobacillus",
@@ -233,6 +339,8 @@ logexp_draw_sub(table_sub_G_Lactobacillus, n=nrow(table_sub_G_Lactobacillus),nam
                              ),
              filepath = "output_forestplot/logexp_sub_G_Lactobacillus.png")
 
+
+table_sub_RE_G_Lactobacillus <- subgroup_RE_ROM(G_Lactobacillus, metadata)
 logexp_draw_sub(table_sub_RE_G_Lactobacillus, n=nrow(table_sub_G_Lactobacillus),name = "Lactobacillus",
                 colorvector = c("grey90",
                                 "white", "white", "white", "white", 
@@ -241,5 +349,25 @@ logexp_draw_sub(table_sub_RE_G_Lactobacillus, n=nrow(table_sub_G_Lactobacillus),
                                 #"grey90","grey90","grey90","grey90","grey90"
                 ),
                 filepath = "output_forestplot/logexp_sub_RE_G_Lactobacillus.png")
+
+
+table_sub_Disease_Lactobacillus <- subgroup_RE_Disease_ROM(G_Lactobacillus, metadata)
+
+logexp_draw_sub(table_sub_Disease_Lactobacillus,n=nrow(table_sub_Disease_Lactobacillus),name="Lactobacillus", 
+                colorvector = c("grey90",
+                                "white", "white", "white","white"
+                ),
+                filepath = "output_forestplot/logexp_Disease_sub_Lactobacillus.png")
+
+
+
+table_sub_FE_Disease_Lactobacillus <- subgroup_FE_Disease_ROM(G_Lactobacillus, metadata)
+
+logexp_draw_sub(table_sub_FE_Disease_Lactobacillus,n=nrow(table_sub_FE_Disease_Lactobacillus),name="Lactobacillus", 
+                colorvector = c("grey90",
+                                "white", "white", "white","white"
+                ),
+                filepath = "output_forestplot/logexp_FE_Disease_sub_Lactobacillus.png")
+
 
 

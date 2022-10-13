@@ -816,9 +816,9 @@ subgroup_RE_ROM <- function(a_DATA, metadata){
 
 
 
-subgroup_Disease_ROM <- function(a_DATA, metadata){
+subgroup_RE_Disease_ROM <- function(a_DATA, metadata){
   
-  a_DATA <- G_Lactobacillus
+ # a_DATA <- G_Lactobacillus
   g_DATA <- left_join(a_DATA, metadata)
   
   g_list <- c("Q","df.Q", "pval.Q","H", "I2", "tau2", 
@@ -829,23 +829,10 @@ subgroup_Disease_ROM <- function(a_DATA, metadata){
                          #backtransf # TRUE (default), results will be presented as ratio of means; otherwise log ratio of means will be shown.
                          data = g_DATA)
   
-  Random.Effect <- data.frame(c("Random.Effect",
+  Overall.RE <- data.frame(c("Overall.RE",
                                 total_DATA[c("Q","df.Q", "pval.Q","H", "I2", "tau2", "k",
                                              "TE.random", "lower.random", "upper.random", "pval.random")], 1))
   
-  treatment_DATA <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
-                             sm = "ROM", id, subgroup = i_type,
-                             #backtransf # TRUE (default), results will be presented as ratio of means; otherwise log ratio of means will be shown.
-                             data = g_DATA)
-  
-  Treatment <- data.frame(c("Treatment", treatment_DATA[c("Q.b.random","df.Q.b", "pval.Q.b.random")],NA, NA, NA, NA,
-                            NA, NA, NA, NA, 2))
-  
-  Treatment_subgroup <- data.frame(c(treatment_DATA[c("bylevs","Q.w")], NA, 
-                                     treatment_DATA[c("pval.Q.w")], NA,
-                                     treatment_DATA[c("I2.w", "tau2.w","k.w",
-                                                      "TE.random.w", "lower.random.w", "upper.random.w", "pval.random.w", )], 3))
-
   disease_DATA <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
                            sm = "ROM", id, subgroup = disease_group,
                            #backtransf # TRUE (default), results will be presented as ratio of means; otherwise log ratio of means will be shown.
@@ -860,7 +847,91 @@ subgroup_Disease_ROM <- function(a_DATA, metadata){
                                    disease_DATA[c("I2.w", "tau2.w","k.w",
                                                   "TE.random.w", "lower.random.w", "upper.random.w", "pval.random.w")], 3))
   
-  table_sub_DATA <- t(cbind(t(Random.Effect), 
+  table_sub_DATA <- t(cbind(t(Overall.RE), 
+                            t(Disease), t(Disease_subgroup)))
+  
+  
+  colnames(table_sub_DATA) <- c("Groups", "Q" , "df.Q" ,"pval.Q","H" , "I2" ,"tau2","k",
+                                "TE", "lower", "upper", "pval" ,"level" )
+  #colnames(lll) <- c("Groups")
+  
+  table_sub_DATA <- data.frame(table_sub_DATA)
+  
+  table_sub_DATA$Groups <- factor(table_sub_DATA$Groups, 
+                                  levels =c("Fixed.Effect", "Overall.RE", 
+                                            
+                                            "Treatment", "EA", "MA", "MOX", 
+                                            "Duration", "≤2", ">2",
+                                            "Disease", "GI", "Obesity", "Other"), order=TRUE)
+  table_sub_DATA<- table_sub_DATA %>% arrange(Groups)
+  table_sub_DATA$Groups <- factor(table_sub_DATA$Groups, 
+                                  levels = table_sub_DATA$Groups, order=TRUE)
+  
+  table_sub_DATA$Q <- as.numeric(table_sub_DATA$Q)
+  table_sub_DATA$pval.Q <- as.numeric(table_sub_DATA$pval.Q)
+  
+  table_sub_DATA$TE <- as.numeric(table_sub_DATA$TE)
+  table_sub_DATA$lower <- as.numeric(table_sub_DATA$lower)
+  table_sub_DATA$upper <- as.numeric(table_sub_DATA$upper)
+  table_sub_DATA$pval <- as.numeric(table_sub_DATA$pval)
+  
+  signif <- NULL
+  stat <- NULL
+  
+  for (i in 1:nrow(table_sub_DATA)) {
+    if (is.na(table_sub_DATA$pval[i])){
+      stat <- rbind(stat,"na")
+      signif <- rbind(signif, ifelse(table_sub_DATA$TE[i]<0, "e", "c"))
+    } else if (table_sub_DATA$pval[i]>=0.05) {
+      stat <- rbind(stat, "stat")
+      signif <- rbind(signif, "ns")
+    } else {
+      stat <- rbind(stat, "stat")
+      signif <- rbind(signif, ifelse(table_sub_DATA$TE[i]<0, "e", "c"))
+    }
+  }
+  
+  #signif <- factor(signif, levels = c("e", "c", "ns", NA), order=TRUE)  
+  #stat <- factor(stat, levels = c("stat", "na", NA), order=TRUE)  
+  table_sub_DATA <- cbind(table_sub_DATA, stat, signif)
+  
+  
+  return(table_sub_DATA)
+}
+
+
+
+subgroup_FE_Disease_ROM <- function(a_DATA, metadata){
+  
+  g_DATA <- left_join(a_DATA, metadata)
+  
+  g_list <- c("Q","df.Q", "pval.Q","H", "I2", "tau2", 
+              "TE.ROM", "lower.ROM", "upper.ROM", "pval.ROM")
+  
+  total_DATA <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                         sm = "ROM", id, #subgroup = disease_group,
+                         #backtransf # TRUE (default), results will be presented as ratio of means; otherwise log ratio of means will be shown.
+                         data = g_DATA)
+  
+  Overall.RE <- data.frame(c("Random.Effect",
+                                total_DATA[c("Q","df.Q", "pval.Q","H", "I2", "tau2", "k",
+                                             "TE.random", "lower.random", "upper.random", "pval.random")], 1))
+  
+  disease_DATA <- metacont(i_num, i_mean, i_sd, c_num, c_mean, c_sd, 
+                           sm = "ROM", id, subgroup = disease_group,
+                           #backtransf # TRUE (default), results will be presented as ratio of means; otherwise log ratio of means will be shown.
+                           data = g_DATA)
+  
+  Disease <- data.frame(c("Disease", 
+                          disease_DATA[c("Q.b.random","df.Q.b", "pval.Q.b.random")],
+                          NA, NA, NA, NA,NA, NA, NA, NA, 2))
+  
+  Disease_subgroup <- data.frame(c(disease_DATA[c("bylevs", "Q.w")], NA, 
+                                   disease_DATA[c("pval.Q.w")], NA,
+                                   disease_DATA[c("I2.w", "tau2.w","k.w",
+                                                  "TE.fixed.w", "lower.fixed.w", "upper.fixed.w", "pval.fixed.w")], 3))
+  
+  table_sub_DATA <- t(cbind(t(Overall.RE), 
                             t(Disease), t(Disease_subgroup)))
   
   
@@ -911,8 +982,6 @@ subgroup_Disease_ROM <- function(a_DATA, metadata){
   
   return(table_sub_DATA)
 }
-
-
 
 
 
